@@ -3,9 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "eventemitter3": "^3.0.1",
+    "invariant": "^2.2.3",
+    "js-base64": "^2.4.3",
+    "jsxstyle": "^2.0.11",
+    "moment": "^2.20.1",
+    "moment-shortformat": "^2.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "react-icons": "^2.2.7",
+    "react-scripts": "1.1.1",
+    "react-visibility-sensor": "^3.11.0"
   },
   "scripts": {
     "start": "react-scripts start",

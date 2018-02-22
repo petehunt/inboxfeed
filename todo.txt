@@ -1,0 +1,7 @@
+# todo
+
+* figure out sort order of pinned. perhaps inline but collapsed?
+* expandable body area
+* logout button
+* pagination
+* unsubscribe / block / snooze
