@@ -351,7 +351,7 @@ class App extends Component {
     });
 
     Gmail.install(
-      "466180145285-1sesk8hjfsd5vn82343a2j48r3du0shs.apps.googleusercontent.com"
+      "829061225081-s98icsbm6dj4r7oh0e9ce9c7u3i6o2dr.apps.googleusercontent.com"
     );
   }
 

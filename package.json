@@ -23,6 +23,7 @@
     "now-start": "cd build && serve -s ./"
   },
   "devDependencies": {
+    "now": "^15.3.0",
     "serve": "^6.5.1"
   }
 }
