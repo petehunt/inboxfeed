@@ -48,6 +48,46 @@ function threadHasLabel(labelId, thread) {
   return false;
 }
 
+class ExpandableText extends Component {
+  constructor() {
+    super();
+    this.state = {
+      expanded: false
+    };
+  }
+
+  handleClick() {
+    this.setState({ expanded: true });
+  }
+
+  render() {
+    let content = (
+      <span
+        onClick={this.handleClick.bind(this)}
+        role="button"
+        tabIndex="0"
+        style={{
+          color: "gray",
+          cursor: "pointer",
+          textDecoration: "none"
+        }}
+      >
+        {this.props.placeholder}
+      </span>
+    );
+
+    if (this.state.expanded) {
+      content = this.props.children;
+    }
+
+    return (
+      <Block whiteSpace="pre-wrap" wordWrap="break-word" overflow="hidden">
+        {content}
+      </Block>
+    );
+  }
+}
+
 class Email extends Component {
   constructor() {
     super();
@@ -137,6 +177,52 @@ class Email extends Component {
       "https://www.gravatar.com/avatar/" +
       md5(emailAddress.trim().toLowerCase());
 
+    const lines = body
+      .split("\n")
+      .map(line => line.trim())
+      .filter(line => line.length > 0);
+    let bodyBlocks = [[]];
+    for (let line of lines) {
+      const isQuote = line.startsWith(">");
+      if (
+        (isQuote && bodyBlocks.length % 2 === 1) ||
+        (!isQuote && bodyBlocks.length % 2 === 0)
+      ) {
+        bodyBlocks.push([]);
+      }
+      bodyBlocks[bodyBlocks.length - 1].push(line);
+    }
+
+    let renderedBody = [];
+    for (let i = 0; i < bodyBlocks.length; i++) {
+      const bodyBlock = bodyBlocks[i];
+      const isQuote = i % 2 === 1;
+      const text = bodyBlock.join("\n");
+      if (!isQuote || (isQuote && bodyBlock.length < 5)) {
+        renderedBody.push(
+          <Block
+            key={i}
+            whiteSpace="pre-wrap"
+            wordWrap="break-word"
+            overflow="hidden"
+          >
+            {text}
+          </Block>
+        );
+      } else {
+        renderedBody.push(
+          <ExpandableText
+            key={i}
+            placeholder={`${
+              bodyBlock.length
+            } quoted lines hidden. Click to show.`}
+          >
+            {body}
+          </ExpandableText>
+        );
+      }
+    }
+
     return (
       <Col
         border="1px solid rgba(0,0,0,0.2)"
@@ -206,14 +292,7 @@ class Email extends Component {
             </Col>
           </Row>
         </Col>
-        <Block
-          padding={10}
-          whiteSpace="pre-wrap"
-          overflow="hidden"
-          wordWrap="break-word"
-        >
-          {body}
-        </Block>
+        <Block padding={10}>{renderedBody}</Block>
         <VisibilitySensor onChange={this.handleVisibilityChange.bind(this)} />
         <Row
           borderTop="1px solid rgba(0,0,0,0.2)"

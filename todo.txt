@@ -1,6 +1,5 @@
 # todo
 
-* expandable body area
 * figure out sort order of pinned. perhaps inline but collapsed?
 * logout button
 * pagination
