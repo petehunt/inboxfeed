@@ -2,6 +2,7 @@ import { Base64 } from "js-base64";
 import { Row, Col, Block } from "jsxstyle";
 import * as Gmail from "./Gmail";
 import invariant from "invariant";
+import md5 from "md5";
 import moment from "moment-shortformat";
 import React, { Component } from "react";
 import VisibilitySensor from "react-visibility-sensor";
@@ -131,6 +132,11 @@ class Email extends Component {
 
     const pinned = this.isPinned();
 
+    const emailAddress = from.slice(from.indexOf("<") + 1, -1);
+    const avatarUrl =
+      "https://www.gravatar.com/avatar/" +
+      md5(emailAddress.trim().toLowerCase());
+
     return (
       <Col
         border="1px solid rgba(0,0,0,0.2)"
@@ -179,7 +185,9 @@ class Email extends Component {
             <Block
               width={32}
               height={32}
-              background="rgba(0,0,0,0.1)"
+              backgroundColor="rgba(0,0,0,0.1)"
+              backgroundImage={"url(" + avatarUrl + ")"}
+              backgroundSize="100% auto"
               border="1px solid rgba(0,0,0,0.15)"
               flexGrow={0}
               flexShrink={0}

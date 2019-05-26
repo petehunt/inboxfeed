@@ -5,5 +5,4 @@
 * logout button
 * pagination
 * unsubscribe / block / snooze
-* avatars, or remove avatar area
 * ml for likely pin
